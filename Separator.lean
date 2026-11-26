@@ -7,7 +7,7 @@ and f, g are modular reward sums. X is removed and Y is inserted. -/
 noncomputable def gain {I : Type*} (δ : ℝ) (e D f g : I → ℝ) (X Y : I) : ℝ :=
   δ * (e X + e Y - D X) + g Y - f X
 
-def price {I : Type*} (δ : ℝ) (D f g : I → ℝ) (X : I) : ℝ :=
+noncomputable def price {I : Type*} (δ : ℝ) (D f g : I → ℝ) (X : I) : ℝ :=
   (δ * D X + f X - g X) / 2
 
 theorem diagonal {I : Type*} (δ η : ℝ) (e D f g : I → ℝ) (X : I) :
@@ -44,4 +44,5 @@ theorem partition_cost {I : Type*} (S : Finset I) (w deg edges : I → ℝ)
       ring
     _ = _ := by rw [Finset.sum_sub_distrib, ← Finset.mul_sum, ← Finset.mul_sum, degree_count]; ring
 end Separator
+
 
