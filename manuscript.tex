@@ -1,0 +1,103 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,geometry}
+\geometry{margin=1in}
+\title{Fractional graph separation as a Euclidean dispersion gap}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+\begin{abstract}
+Given a graph, we construct two equally large sets of Euclidean sites and choose site rewards so that the first set is locally optimal for exchanges of at most $p$ sites and the second is globally optimal. We determine the largest possible objective difference between these two sets. It equals the minimum weighted edge boundary of a fractional partition into blocks of at most $p$ vertices. A local tolerance adds exactly a charge per unit of block weight. The distances take at most two nonzero values, and the same point set works for every exchange radius and tolerance. The proof constructs rewards from an optimal dual solution and uses tight blocks to control all mixed configurations. For cycles the gap has a closed form; for unions of triangles an integral partition gives a strictly incorrect value already at radius two.
+\end{abstract}
+\noindent\textbf{Keywords.} Fractional graph partition, Euclidean distance matrix, max-sum dispersion, local search, linear programming duality.
+
+\section{An inverse problem for exchange neighbourhoods}
+Let $H=(V,E)$ be a simple graph on $n\ge2$ vertices and put $m=|E|$. Write $e(U)$ for the number of edges induced by $U$ and $b(U)$ for the number with exactly one endpoint in $U$. Take two disjoint labelled copies $A,B$ of $V$. For any choice of site rewards $w$ the value of a configuration $S$ of exactly $n$ sites is
+\[
+ F_w(S)=\sum_{s\in S}w_s+\sum_{\{s,t\}\subseteq S}d(s,t),
+\]
+where the second sum is over unordered pairs of distinct sites. Given $1\le p\le n$ and $\eta\ge0$, call $A$ stable if $F_w(S)\le F_w(A)+\eta$ whenever $|S\setminus A|\le p$. Rewards may have either sign. Adding a common constant makes all rewards nonnegative without changing any comparison.
+
+Our question fixes the geometry and varies the rewards. How far above $A$ can the designated configuration $B$ lie while $A$ stays stable? Can the same rewards ensure that no mixture of the two copies beats $B$? These questions differ from estimating an approximation ratio for a particular objective. They concern an additive gap for a prescribed pair of configurations.
+
+Lovász [1] studied fractional partitions of graphs with a bound on block size, minimizing their average edge expansion. At zero tolerance, splitting a disconnected block into its connected components preserves both coverage and total boundary. Thus our zero-tolerance quantity is the finite fractional separation objective in [1], with a change of normalization. Bounded coalition size and balanced collections already occur in the work of Meir, Rosenschein and Malizia [2]. Counting induced edges as coalition value is the graph game of Deng and Papadimitriou [3]. On the geometric side, Cevallos [4, Theorem 4.13] used two groups of sites with perturbed distances to obtain multi-exchange locality examples for negative-type dispersion. The construction below uses within-group distances to represent an arbitrary graph. Our focus is the equality of two optimization values and the attainment of the gap with a prescribed global maximizer. The previous public dispersion note [6] instead gives a four-point upper bound and an exact fixed-comparison formula for radius one.
+
+\section{The realization theorem}
+Let $\mathcal U_p$ be the nonempty subsets of $V$ of size at most $p$. A fractional partition is a family $\lambda_U\ge0$ with $\sum_{U\ni i}\lambda_U=1$ for every $i$. For $\delta>0$ define
+\[
+ L_{p,\eta}(H)=\min_{\lambda}\sum_{U\in\mathcal U_p}\lambda_U\bigl(\delta b(U)+\eta\bigr).
+\]
+All blocks, including disconnected ones, are allowed. At $\eta=0$ splitting a disconnected block into components preserves both coverage and boundary cost. Consequently our zero-tolerance objective agrees with $2n\delta$ times the normalized fractional separation number of [1]. At positive tolerance disconnected blocks may save a block charge.
+
+Use the following distances on $A\cup B$. Each within-copy pair corresponding to an edge of $H$ has distance $1+\delta$. All remaining distinct pairs have distance one. Write $\rho$ for the largest eigenvalue of the adjacency matrix of $H$. Assume
+\[
+                    \rho(2\delta+\delta^2)\le1 .
+\]
+Every graph admits a positive $\delta$ satisfying this condition.
+
+\textbf{Theorem 1.} These are ordinary Euclidean distances in dimension at most $2n-1$. For every $p,\eta$ in the ranges above, the maximum of $F_w(B)-F_w(A)$ over all rewards making $A$ stable is $L_{p,\eta}(H)$. Some maximizing rewards also make $B$ a global maximizer among all $n$-site configurations.
+
+The same geometry therefore represents the entire dependence on the exchange radius. A new choice of rewards is allowed for each pair of parameters. The extremum compares $A$ specifically with $B$.
+
+\textit{Euclidean realization.} Let $K$ be the adjacency matrix of the disjoint union of two copies of $H$, and $J$ the all-ones matrix of order $2n$. The proposed squared-distance matrix is $D=J-I+(2\delta+\delta^2)K$. On the subspace perpendicular to the all-ones vector, $z^\top Dz\le[-1+(2\delta+\delta^2)\rho]\|z\|^2$. With $P=I-J/(2n)$, the matrix $-PDP/2$ is thus positive semidefinite. Taking any Gram factor gives points in dimension at most $2n-1$. For distinct indices $i,j$, the squared distance is the quadratic form of this Gram matrix at the difference of their coordinate vectors; since $D$ is symmetric and hollow, that value is $D_{ij}$. This proves the assertion about ordinary distances. The condition is exact: if $v$ is a top eigenvector for $H$, then $(v,-v)$ lies in the centered subspace and attains the spectral bound. This argument is an application of the standard spectral representation of graphs by two-distance sets [5].
+
+\textit{The exchange constraints.} Identify subsets of either copy with subsets of $V$. A configuration is determined by deleting $X$ from $A$ and inserting $Y$ from $B$, where $|X|=|Y|$. Write $D_H(X)=\sum_{i\in X}\deg_H(i)$, and use $f(X),g(Y)$ for sums of rewards on the respective copies. The unit-distance contribution is constant at fixed cardinality. Removing $X$ destroys $D_H(X)-e(X)$ edges in the left copy and inserting $Y$ adds $e(Y)$ edges on the right. Hence the gain is
+\[
+ \Delta(X,Y)=g(Y)-f(X)+\delta\{e(X)+e(Y)-D_H(X)\}.
+\]
+For any stable rewards define $t_i=(f_i+\delta\deg_H(i)-g_i)/2$ and $t(U)=\sum_{i\in U}t_i$. Applying stability to $X=Y=U$ gives
+\[
+ t(U)\ge\delta e(U)-\eta/2 \quad(U\in\mathcal U_p),\qquad
+ F_w(B)-F_w(A)=2\delta m-2t(V).
+\]
+Conversely, take any real vector $t$ satisfying these inequalities. Assign $f_i=t_i-\delta\deg_H(i)$ and $g_i=-t_i$. Then, with $h(U)=\delta e(U)-t(U)$,
+\[
+                     \Delta(X,Y)=h(X)+h(Y).
+\]
+Each summand is at most $\eta/2$ on an admissible nonempty block. The empty exchange has gain zero. Thus the diagonal constraints suffice to construct rewards controlling every exchange, including those for which $X\ne Y$.
+
+\textit{Computing the maximum.} Minimize $t(V)$ subject to the block inequalities. Singletons give finite lower bounds, and taking all $t_i$ sufficiently large gives feasibility. The dual maximizes $\sum_U\lambda_U(\delta e(U)-\eta/2)$ over fractional partitions. Equality in each coverage constraint comes from the absence of sign restrictions on $t_i$. Both optima are attained by finite-dimensional linear programming duality. Since $2e(U)=D_H(U)-b(U)$ and $\sum_U\lambda_U D_H(U)=2m$, substitution in $2\delta m-2t(V)$ gives precisely $L_{p,\eta}(H)$.
+
+\textit{Why the second copy is globally optimal.} Choose an optimal primal-dual pair $t,\lambda$. Every $U$ with $\lambda_U>0$ is tight. For any $W\subseteq V$, apply the primal inequality to $U\setminus W$. The inequality also holds for the empty set, since $\eta\ge0$. Subtraction from tightness gives
+\[
+ t(W\cap U)\le\delta\{e(U)-e(U\setminus W)\}.
+\]
+Weight by $\lambda_U$ and sum. Exact coverage gives $t(W)$ on the left. On the right, an edge incident with $W$ is counted only in blocks containing both its endpoints; the total weight of such blocks is at most one. It follows that $t(W)\le\delta\{m-e(V\setminus W)\}$. Setting $W=V\setminus Z$ gives $h(Z)\le h(V)$ for every $Z\subseteq V$, with no size restriction. Every mixed configuration therefore has gain at most $2h(V)=\Delta(V,V)$. This completes the proof. $\square$
+
+\section{Consequences of the representation}
+\textbf{Corollary 2.} At zero tolerance the attainable gap vanishes precisely when every connected component has at most $p$ vertices. At fixed $p$ the gap is nondecreasing, concave and piecewise linear as a function of $\eta\ge0$.
+
+\textit{Proof.} A zero-cost fractional partition uses only blocks with empty boundary. Each is a union of entire components. Exact coverage therefore forces every component to fit, and the components themselves give the converse. The partition polytope is nonempty and compact, with finitely many vertices. Its objective gives the minimum of finitely many affine functions of $\eta$ with positive slopes. $\square$
+
+\textbf{Corollary 3.} For vertex-transitive $H$ one has
+\[
+ L_{p,\eta}(H)=n\min_{U\in\mathcal U_p}\frac{\delta b(U)+\eta}{|U|}.
+\]
+In particular, for a cycle on $n\ge3$ vertices the answer is $n(2\delta+\eta)/p$ if $p<n$, and $\eta$ if $p=n$.
+
+\textit{Proof.} Fractional coverage gives $\sum_U\lambda_U|U|=n$, proving the lower bound. Take a block attaining the minimum. Its automorphism orbit covers each vertex equally often. Giving every orbit member the reciprocal of that multiplicity yields equality. On a cycle each nonempty proper block has at least two boundary edges and a consecutive block of size $p<n$ has exactly two. At $p=n$, using $V$ costs $\eta$ and every partition has total weight at least one. $\square$
+
+\textbf{Corollary 4.} For $p=2$ and $\eta=0$ the gap equals $2\delta(m-\nu_f(H))$, where $\nu_f(H)$ is the fractional matching number. Restricting the boundary minimization to ordinary partitions gives $2\delta(m-\nu(H))$, where $\nu(H)$ is the matching number.
+
+\textit{Proof.} A block contributes to the dual internal-edge objective only when it is a pair spanning an edge. Its weight is then a fractional matching variable, and singleton weights can fill all unused coverage. Under integrality the edge blocks form a matching. $\square$
+
+For a disjoint union of $q$ triangles, the two boundary values are $3q\delta$ and $4q\delta$, respectively. Giving every triangle edge weight one half proves the fractional value; an ordinary matching takes at most one edge per triangle. The same fixed $\delta=1/10$ satisfies the Euclidean spectral condition for all $q$. Thus an integral partition overstates the realizable additive gap by an amount growing linearly with the number of sites, even with just two distances and a uniform bound on the graph degree.
+
+\section{Checks and scope}
+The companion program independently evaluates the original distance objective on every mixed configuration. It enumerates all labelled simple graphs on two through four vertices, every $p$ from one through $n$, and tolerances zero and $1/5$, with $\delta=1/10$. For each of the 568 instances it finds matching primal and dual witnesses by exact rational basis enumeration. It verifies the attained gap, the local inequalities, and global optimality of the second copy by direct comparison. The Lean companion isolates the algebra of diagonal constraints, the realizing rewards, the tight-block inequality and the finite weighted boundary identity. The geometric embedding, the LP duality step and the graph incidence arguments are proved in the text.
+
+The construction uses dimension growing with graph size and permits site rewards to depend on the graph, the exchange radius and the tolerance. It leaves open whether fixed-dimensional Euclidean instances, or instances with all rewards equal, can represent a comparably broad class of separation profiles. OpenAI Codex assisted in deriving and writing this research draft and implementing its checks. An independent priority search and mathematical review are outstanding.
+\section*{References}
+[1] L. Lovász, Hyperfinite graphings and combinatorial optimization, arXiv:1709.03179, especially the finite separation problem and its fractional relaxation.
+
+[2] R. Meir, J. S. Rosenschein and E. Malizia, Subsidies, stability, and restricted cooperation in coalitional games, IJCAI (2011).
+
+[3] X. Deng and C. H. Papadimitriou, On the complexity of cooperative solution concepts, Mathematics of Operations Research 19 (1994), 257--266. DOI 10.1287/moor.19.2.257.
+
+[4] A. B. Cevallos Manzano, Approximation algorithms for geometric dispersion, doctoral thesis, EPFL, no. 7291 (2016), Theorem 4.13.
+
+[5] A. Roy, Minimal Euclidean representations of graphs, arXiv:0812.3707.
+
+[6] Sharp additive bounds for multi-swap local search in metric dispersion, public research draft, GitHub repository lujiayilu/dispersion-four-point, commit f60d0fe.
+\end{document}
+

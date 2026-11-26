@@ -4,7 +4,7 @@ namespace Separator
 
 /-- Abstract finite-set interface: e is the induced-edge count, D is the degree sum,
 and f, g are modular reward sums. X is removed and Y is inserted. -/
-def gain {I : Type*} (δ : ℝ) (e D f g : I → ℝ) (X Y : I) : ℝ :=
+noncomputable def gain {I : Type*} (δ : ℝ) (e D f g : I → ℝ) (X Y : I) : ℝ :=
   δ * (e X + e Y - D X) + g Y - f X
 
 def price {I : Type*} (δ : ℝ) (D f g : I → ℝ) (X : I) : ℝ :=
@@ -21,7 +21,7 @@ theorem realizing {I : Type*} (δ : ℝ) (e D t : I → ℝ) (X Y : I) :
   unfold gain
   ring
 
-theorem local {a b η : ℝ} (ha : a ≤ η/2) (hb : b ≤ η/2) : a+b ≤ η := by linarith
+theorem local_gain {a b η : ℝ} (ha : a ≤ η/2) (hb : b ≤ η/2) : a+b ≤ η := by linarith
 
 /-- The estimate on a tight block after deleting any subset of its vertices.
 The empty remainder has zero cost and also satisfies the required inequality. -/
@@ -44,3 +44,4 @@ theorem partition_cost {I : Type*} (S : Finset I) (w deg edges : I → ℝ)
       ring
     _ = _ := by rw [Finset.sum_sub_distrib, ← Finset.mul_sum, ← Finset.mul_sum, degree_count]; ring
 end Separator
+

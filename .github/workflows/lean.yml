@@ -11,6 +11,7 @@ jobs:
           curl -fsSL https://elan.lean-lang.org/elan-init.sh | sh -s -- -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
 
+      - run: python3 verify.py
       - run: lake update
       - run: lake exe cache get
       - run: lake build
@@ -18,5 +19,6 @@ jobs:
           printf 'import Separator\n#print axioms Separator.diagonal\n#print axioms Separator.realizing\n#print axioms Separator.tight_restriction\n#print axioms Separator.partition_cost\n' > Audit.lean
           lake env lean Audit.lean | tee audit.log
           ! grep -q sorryAx audit.log
+
 
 
